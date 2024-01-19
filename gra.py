@@ -21,33 +21,37 @@ def check_winner(board):
     return False
 
 def tic_tac_toe():
-    board = [[" " for _ in range(3)] for _ in range(3)]
-    player = 'X'
-    game_over = False
+    while True:
+        board = [[" " for _ in range(3)] for _ in range(3)]
+        player = 'X'
+        game_over = False
 
-    while not game_over:
-        print_board(board)
-        row = int(input(f"gracz {player}, wybierz linię (0, 1, 2): "))
-        col = int(input(f"gracz  {player}, wybierz kolumnę (0, 1, 2): "))
+        print("Witaj w grze Kółko i Krzyżyk!")
 
-        if board[row][col] == " ":
-            board[row][col] = player
-            if check_winner(board):
-                print_board(board)
-                print(f"gracz{player} wygrał!")
-                game_over = True
-            else:
-                if player == 'X':
-                    player = 'O'
-                else:
-                    player = 'X'
-        else:
-            print("Ta komórka jest już zajęta. Spróbuj ponownie.")
-
-        if all(row.count(' ') == 0 for row in board) and not check_winner(board):
+        while not game_over:
             print_board(board)
-            print("Remis!")
-            game_over = True
+            row = int(input(f"Gracz {player}, wybierz wiersz (0, 1, 2): "))
+            col = int(input(f"Gracz {player}, wybierz kolumnę (0, 1, 2): "))
+
+            if board[row][col] == " ":
+                board[row][col] = player
+                if check_winner(board):
+                    print_board(board)
+                    print(f"Gracz {player} wygrał!")
+                    game_over = True
+                else:
+                    player = 'O' if player == 'X' else 'X'
+            else:
+                print("Ta komórka jest już zajęta. Spróbuj ponownie.")
+
+            if all(row.count(' ') == 0 for row in board) and not check_winner(board):
+                print_board(board)
+                print("Remis!")
+                game_over = True
+
+        decision = input("Co chcesz zrobić? (W - Wejdź do gry, K - Zakończ): ").upper()
+        if decision != 'W':
+            break
 
 if __name__ == "__main__":
     tic_tac_toe()
